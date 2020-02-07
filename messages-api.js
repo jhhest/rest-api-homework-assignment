@@ -5,14 +5,13 @@
  * problems.
  */
 
-// Create an Express app in that file.
-// The app should listen for requests on port 3000.
-// TODO:
-// Make sure you add the required dependency.
+// Add a single endpoint to the app responds to POST requests to the /messages URI.
+
+
 const cors = require("cors");
 const Express = require("express");
 const bodyParser = require("body-parser");
-const logMiddleware = require("./middleWareFunctions/logMiddleware")
+const logMiddleware = require("./middleWareFunctions/logMiddleware");
 
 const corsMiddleware = cors();
 
@@ -21,6 +20,9 @@ app.use(corsMiddleware, logMiddleware, bodyParser.json());
 app.get("/", (request, respond) =>
   respond.send("<h1>Rest Api - Homework Assignment</h1>")
 );
+app.post("/message", (request, response) => {
+  response.send(request.body)
+})
 
 const port = 3000;
 app.listen(port, () =>

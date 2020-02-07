@@ -4,7 +4,7 @@ const logMiddleware = (request, respond, next) => {
 /**
  * MiddleWare logging function.
  * New Request is initiated 
- **/}
+ **/
 `
   );
   next();

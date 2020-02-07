@@ -20,7 +20,8 @@ app.use(corsMiddleware, logMiddleware, bodyParser.json());
 app.get("/", (request, respond) =>
   respond.send("<h1>Rest Api - Homework Assignment</h1>")
 );
-app.post("/message", (request, response) => {
+app.post("/message", (request, response, next) => {
+  console.log("Log of text property of request.body: ", request.body)
   response.send(request.body)
 })
 

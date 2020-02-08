@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start_messages-api": "npx nodemon messages-api.js",
+    "start_messages-api.js": "npx nodemon messages-api.js",
     "start_sequelize-rest.js": "npx nodemon sequelize-rest.js"
   },
   "keywords": [],

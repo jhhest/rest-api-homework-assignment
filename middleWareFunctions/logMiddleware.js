@@ -10,26 +10,17 @@ const logMiddleware = (response, request, next) => {
   );
   next();
 };
-
-let numberOfViews = 0;
-
-const checkNumberOfViews = (response, request, next) => {
+let numberOfViews = 0
+const checkNumberOfViews = (request, response, next) => {
+  console.log("Log of text property of request.body: ", request.body);
   numberOfViews++;
   console.log("This is your ", numberOfViews, " view.");
 
   if (numberOfViews > 5) {
     response.sendStatus(429).end();
+  } else {
+    next();
   }
 };
-// const checkNumberOfViews = (request, response, next) => {
-//   numberOfViews++;
-//   console.log("This is your ", numberOfViews, " view.");
-//   if (numberOfViews > 5) {
-//     response.status(500).json({
-//       message: `You sended to many requests to endpoint`,
-//       givenInputByClient: request.body
-//     });
-//   }
-// };
 
 module.exports = { logMiddleware, checkNumberOfViews };

@@ -1,5 +1,5 @@
 /**
- * npm run start_messages-api 
+ * npm run start_messages-api.js
  * -> To start development server.
  */
 
@@ -19,28 +19,21 @@ app.get("/", (request, response) =>
   response.send("<h1>Rest Api - Homework Assignment</h1>")
 );
 
-let numberOfViews = 0;
-app.post("/message", (request, response, next) => {
+app.post("/messages", checkNumberOfViews, (request, response, next) => {
   console.log("Log of text property of request.body: ", request.body);
-  numberOfViews++;
-  console.log("This is your ", numberOfViews, " view.");
 
-  if (numberOfViews > 5) {
-    response.sendStatus(429).end();
-  } else {
-    if (!response.headerSent) {
-      const textPropsArr = Object.values(request.body);
-      let objectMeetRequirements = true;
+  if (!response.headerSent) {
+    const textPropsArr = Object.values(request.body);
+    let objectMeetRequirements = true;
 
-      for (let i = 0; i < textPropsArr.length; i++) {
-        if (textPropsArr[i] === "") {
-          objectMeetRequirements = false;
-        }
+    for (let i = 0; i < textPropsArr.length; i++) {
+      if (textPropsArr[i] === "") {
+        objectMeetRequirements = false;
       }
-
-      !objectMeetRequirements && response.sendStatus(500).end();
-      objectMeetRequirements && response.send(request.body);
     }
+
+    !objectMeetRequirements && response.sendStatus(500).end();
+    objectMeetRequirements && response.send(request.body);
   }
 });
 

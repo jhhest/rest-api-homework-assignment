@@ -26,7 +26,7 @@ const Movie = db.define("movie", {
 });
 
 // sync the model with the database.
-db.sync({ force: true }) // Turn off if data needs to removed on each restart of server -> Needed if models changes.
+db.sync({ force: false }) // Turn on if data needs to removed on each restart of server -> Needed if models changes.
   .then(() => console.log("database scheme updated..."))
   .then(() =>
     Promise.all([
@@ -84,14 +84,14 @@ app.get("/movie", (req, res, next) => {
     .then(movies => {
       res.json(movies);
     })
-    .catch(next);
+    .catch(error => next(error));
 });
 
 app.get("/movie/:id", (req, res, next) => {
   Movie.findByPk(req.params.id)
     .then(movie => {
       if (!movie) {
-        res.status(404).end();
+        res.sendStatus(404).end();
       } else {
         res.json(movie);
       }
@@ -99,12 +99,13 @@ app.get("/movie/:id", (req, res, next) => {
     .catch(next);
 });
 // update // Update an entry of an movie.
-
 app.put("/movie/:id", (req, res, next) => {
   Movie.findByPk(req.params.id)
     .then(movie => {
       if (movie) {
-        movie.update(req.body).then(movie => res.json(movie));
+        Movie.update(req.body, { where: { id: req.params.id } }).then(movie => {
+          res.json(movie);
+        });
       } else {
         res.status(404).end();
       }
@@ -112,7 +113,7 @@ app.put("/movie/:id", (req, res, next) => {
     .catch(next);
 });
 
-// Delete // Delete a movie. TODO:
+// Delete // Delete a movie.
 app.delete("/movie/:id", (req, res, next) => {
   Movie.destroy({
     where: {
@@ -135,9 +136,9 @@ const port = process.env.PORT || 3000;
 app.listen(port, () =>
   console.log(`
 /**
-   * 1. REST APIs Homework Assignment
-   * 1.2. Use Sequelize to build a REST API.
-   * Server listens to port: ${port}
-   **/
+ * 1. REST APIs Homework Assignment
+ * 1.2. Use Sequelize to build a REST API.
+ * Server listens to port: ${port}
+ **/
   `)
 );

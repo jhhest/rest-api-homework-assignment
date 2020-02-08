@@ -5,6 +5,7 @@
 
 const cors = require("cors");
 const Express = require("express");
+
 const {
   logMiddleware,
   checkNumberOfViews
@@ -31,9 +32,9 @@ app.post("/messages", checkNumberOfViews, (request, response, next) => {
         objectMeetRequirements = false;
       }
     }
-
-    !objectMeetRequirements && response.sendStatus(500).end();
-    objectMeetRequirements && response.send(request.body);
+    objectMeetRequirements
+      ? response.send(request.body)
+      : response.sendStatus(500).end();
   }
 });
 

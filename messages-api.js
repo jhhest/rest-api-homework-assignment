@@ -1,15 +1,10 @@
 /**
- * Run npm start to start development server.
- *
- * Added cors to prevent "Origin is not allowed by Access-Control-Allow-Origin"
- * problems.
+ * npm run start_messages-api 
+ * -> To start development server.
  */
-
-// Add a single endpoint to the app responds to POST requests to the /messages URI.
 
 const cors = require("cors");
 const Express = require("express");
-const bodyParser = require("body-parser");
 const {
   logMiddleware,
   checkNumberOfViews
@@ -18,7 +13,7 @@ const {
 const corsMiddleware = cors();
 
 const app = new Express();
-app.use(corsMiddleware, logMiddleware, bodyParser.json());
+app.use(corsMiddleware, logMiddleware, Express.json());
 
 app.get("/", (request, response) =>
   response.send("<h1>Rest Api - Homework Assignment</h1>")
@@ -44,7 +39,6 @@ app.post("/message", (request, response, next) => {
       }
 
       !objectMeetRequirements && response.sendStatus(500).end();
-
       objectMeetRequirements && response.send(request.body);
     }
   }
@@ -54,6 +48,8 @@ const port = 3000;
 app.listen(port, () =>
   console.log(`
   /**
+   * 1. REST APIs Homework Assignment
+   * 1.1 Create an Express app with a single end-point.
    * Server listens to port: ${port}
    **/
   `)

@@ -7,12 +7,20 @@ const logMiddleware = (response, request, next) => {
  * New Request is initiated 
  **/
 `
-  )
+  );
   next();
 };
 
 let numberOfViews = 0;
 
+const checkNumberOfViews = (response, request, next) => {
+  numberOfViews++;
+  console.log("This is your ", numberOfViews, " view.");
+
+  if (numberOfViews > 5) {
+    response.sendStatus(429).end();
+  }
+};
 // const checkNumberOfViews = (request, response, next) => {
 //   numberOfViews++;
 //   console.log("This is your ", numberOfViews, " view.");
@@ -24,4 +32,4 @@ let numberOfViews = 0;
 //   }
 // };
 
-module.exports = { logMiddleware };
+module.exports = { logMiddleware, checkNumberOfViews };

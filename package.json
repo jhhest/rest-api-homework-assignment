@@ -1,10 +1,11 @@
 {
-  "name": "REST-AP-Homework-Assignment",
+  "name": "rest-api-homework-assignment",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon messages-api.js"
+    "start_messages-api": "npx nodemon messages-api.js",
+    "start_sequelize-rest.js": "npx nodemon sequelize-rest.js"
   },
   "keywords": [],
   "author": "Jan van Hest",
@@ -12,6 +13,8 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^7.18.1",
+    "sequelize": "^5.8.6"
   }
 }
